@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sort Folders</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Sort Folders</h1>
+        <form id="uploadForm" enctype="multipart/form-data" method="post" action="/sort">
+            <input type="file" id="folderUpload" name="folderUpload" webkitdirectory directory multiple>
+            <button id="sortFolder" type="submit">Sort</button>
+        </form>
+        <button id="downloadButton" class="full-width complementary">Download Sorted Files</button>
+        <button id="reloadButton" class="full-width">Reload Upload</button>
+        <p id="message"></p>
+        <div id="fileDisplay"></div>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>
