@@ -194,7 +194,7 @@ MT940_2607_2907 (dossier)
     - Cliquez sur "Open MT940 App" pour ouvrir une page dans le navigateur par défaut.
     - Cliquez sur "Choose CSV File" pour importer le csv clients
     - Cliquez sur "Choose Folder" pour importer le dossier des fichiers MT 940 à traiter
-
+ 
 2. **Téléchargez le Dossier :**
     - La page permet de sélectionner le dossier à télécharger dans l'application.
     - Une fois sélectionné, cliquez sur "Upload" pour télécharger et traiter le dossier.
@@ -205,6 +205,7 @@ MT940_2607_2907 (dossier)
     - Décompressez le dossier téléchargé par l'application MT940
     - Placez le dossier décompressé dans un autre dossier (appelé Dossier A).
     - Le Dossier A contiendra les dossiers déjà traités par l'application MT940.
+    - Avant de lancer "Folder Sort MT940", fermé "MT940 App"(et la petite fenêtre).
     - Lancez l'application Folder Sort MT940
     - ![Fenêtre de bienvenue du tri](../images/Window_Folder_Sort_MT940_App.png)
 

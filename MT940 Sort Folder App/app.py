@@ -34,6 +34,7 @@ folder_name = None
 
 
 def date_range(name):
+    print("Date range")
     pos = name.find('940')
     if pos == -1:
         return None
@@ -109,12 +110,15 @@ def sort_files_by_currency(base_folder):
 
 
 def rename_sorted_folder_by_dates(sorted_folder):
+    print("----rename_sorted_folder_by_dates----")
     global folder_name
+    print("folder_name: ", folder_name)
     dates = []
     for root, dirs, files in os.walk(sorted_folder):
         for dir_name in dirs:
+            print("dir_name: ", dir_name)
             date_str = date_range(dir_name)
-            #print("date_str:", date_str)
+            print("date_str:", date_str)
             if date_str:
                 try:
                     date_obj = datetime.datetime.strptime(date_str, '%d%m')
@@ -122,6 +126,7 @@ def rename_sorted_folder_by_dates(sorted_folder):
                 except ValueError:
                     continue
     if dates:
+        print("date of MT940's")
         oldest_date = min(dates)
         most_recent_date = max(dates)
         oldest_date_str = oldest_date.strftime('%d%m')
@@ -132,18 +137,25 @@ def rename_sorted_folder_by_dates(sorted_folder):
         folder_name = new_folder_name
         if not os.path.exists(new_sorted_folder):
             os.rename(sorted_folder, new_sorted_folder)
+            print("new folder_name: ", new_sorted_folder)
             return new_sorted_folder
         else:
+            print("folder_name: ", sorted_folder)
             return sorted_folder
+    else:
+        print("--didnt enter---")
+    print(sorted_folder)
     return sorted_folder
 
 
 def get_first_folder(upload_folder):
+    print("----get_first_folder----")
     all_folders = [
         d for d in os.listdir(upload_folder)
         if os.path.isdir(os.path.join(upload_folder, d))
     ]
     if all_folders:
+        print("-folder name-", all_folders[0])
         return os.path.join(upload_folder, all_folders[0])
     else:
         raise FileNotFoundError('No directories found in the upload folder.')
@@ -156,10 +168,11 @@ def index():
 
 @app.route('/download', methods=['GET'])
 def download():
+    global folder_name
     if not folder_name:
         return jsonify({
             'message':
-            'No folder to download ! Upload a folder to be sorted first.'
+            'No folder to download ! Upload a folder to be sorted first. No folder name'
         })
 
     sorted_folder_path = os.path.join(SORTED_FOLDER)
@@ -168,7 +181,7 @@ def download():
     if not os.path.exists(sorted_folder_path):
         return jsonify({
             'message':
-            'No folder to download ! Upload a folder to be sorted first.'
+            'No folder to download ! Upload a folder to be sorted first. No sorted folder'
         })
 
     zip_path = os.path.join(SORTED_FOLDER, f'{folder_name}.zip')
@@ -239,7 +252,7 @@ def sort():
 
 # Tkinter GUI setup
 def open_browser():
-    webbrowser.open('http://127.0.0.1:5001')
+    webbrowser.open('http://127.0.0.1:5000')
 
 
 class App:

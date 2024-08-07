@@ -45,6 +45,8 @@ def upload():
     global file_counter
     global bad_files
 
+    print("Uploading")
+
     if 'files[]' not in request.files or 'importCsv' not in request.files:
         return jsonify({'message': 'Please upload a folder to process'}), 400
 
@@ -65,6 +67,7 @@ def upload():
             file_path = os.path.join(UPLOAD_FOLDER, filename)
             os.makedirs(os.path.dirname(file_path), exist_ok=True)
             file.save(file_path)
+            print("File imported: ", imported_files)
 
     if import_csv:
         csv_path = os.path.join(UPLOAD_FOLDER, import_csv.filename)
@@ -74,6 +77,7 @@ def upload():
     if not os.path.exists(processed_folder):
         os.makedirs(processed_folder)
 
+    print("Script will start ---")
     result = run_python_script(folder_name, csv_path)
 
     print("imported_files: " , imported_files)
@@ -85,7 +89,7 @@ def upload():
         message += " | \n"
         return jsonify({'message': message, 'result': bad_files})
 
-    return jsonify({'message': 'Files successfully uploaded and processed', 'result': result})
+    return jsonify({'message': 'Files successfully uploaded and processed.'})
 
 
 @flask_app.route('/download', methods=['GET'])
@@ -130,6 +134,7 @@ def reload():
 
 
 def run_python_script(folder_name, csv_path):
+    print("-----Script started----")
     folder_path = os.path.join(UPLOAD_FOLDER, folder_name)
     processed_folder = os.path.join(PROCESSED_FOLDER, folder_name)
     account_bic_file = csv_path
@@ -148,6 +153,7 @@ def read_second_row(filename):
     return second_row
 
 def create_account_bic_mapping(filename):
+    print("-----BIC mapping started----")
     global file_counter
     account_bic_dict = {}
     with open(filename, newline='', encoding='ISO-8859-1') as csvfile:
@@ -163,6 +169,7 @@ def create_account_bic_mapping(filename):
 
                 if account_number and bic_number:  # Ensure neither is empty
                     account_bic_dict[account_number] = [client_name, bic_number, currency]
+    print("BIC Mapping -- DONE ---")
     return account_bic_dict
 
 def find_account_number(content):
@@ -190,6 +197,7 @@ def find_and_replace_bic(content, new_bic):
     return content
 
 def process_files_in_folder(folder_path, account_bic_dict, processed_folder):
+    print("-----Process started----")
     global file_counter
     global bad_files
     account_numbers = []
@@ -199,25 +207,34 @@ def process_files_in_folder(folder_path, account_bic_dict, processed_folder):
         file_path = os.path.join(folder_path, filename)
         with open(file_path, 'r', encoding='utf-8') as file:
             content = file.read()
+            print("-----searching for account----", file_counter)
             account_number = find_account_number(content)
-
+            print("-----account found----", file_counter)
             if account_number and account_number in account_bic_dict:
+                
                 client_name = account_bic_dict[account_number][0]
                 new_bic = account_bic_dict[account_number][1]
                 currency = account_bic_dict[account_number][2]
+                print("-----searching for BIC----", file_counter)
                 modified_content = find_and_replace_bic(content, new_bic)
+                print("-----BIC found----", file_counter)
                 date = find_date(content)
 
                 array_base_files = {}
 
+                print("-----creating file ----", file_counter)
+                print(filename)
                 base_file_name = f"{client_name} {currency} {date}"
                 array_base_files[base_file_name] = 1
                 new_file_name = base_file_name + ".txt"
                 new_file_path = os.path.join(processed_folder, new_file_name)
+                print("-----new file ----", new_file_name)
 
                 while os.path.exists(new_file_path):
+                    print("----- file exists ----", new_file_path)
                     new_file_name = f"{base_file_name} {array_base_files[base_file_name]+1}.txt"
                     new_file_path = os.path.join(processed_folder, new_file_name)
+                    array_base_files[base_file_name] += 1
                 with open(new_file_path, 'w', encoding='utf-8') as new_file:
                     new_file.write(modified_content)
                     file_counter += 1
