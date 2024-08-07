@@ -96,9 +96,9 @@ Dans l'exemple si dessous:
 - no_25 : ne contient pas ":25:" qui est recherché par l'algorithme pour l'extraction du numéro de compte client
 - problem_at_25: ce fichier contient ":25:" mais il n'y a pas de numéro de compte client et donc l'algorithme ne peut pas l'extraire correctement. Dans cet exemple, l'IBAN est renseigné au lieu du numéro de compte, et l'algorithme essai de trouver cet IBAN dans le dictionnaire des numéro de compte et donc échoue.
 
-
-
 ![corrupted_files](../images/corrupted_files.png)
+
+
 
 ## Application MT940 Sort Folder
 

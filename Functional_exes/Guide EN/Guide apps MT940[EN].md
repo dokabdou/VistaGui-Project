@@ -88,7 +88,16 @@ The executable will:
 The only restriction of the app is that the uploaded folder must be named in this way "MT 940 dd mm yyyy". If it isnt then the app will print a message.
 
 Screenshot of app:
-![restriction](Functional_exes/images/restriction.png)
+![restriction](../images/restriction.png)
+
+### Corrupted files
+When there are files that are corrupted, if they do not contain account numbers or if the format is incorrect. If that were to occur, the app will catalogue the files and print a message listing the problematic files after the process is completed. The user will still be able to download the files that were processed correctly.
+
+In the example below :
+- no_25 : does not contain ":25:" which the algorithm searches for in order to extract the account number
+- problem_at_25: this file contains ":25:" however there is no account number, so the algorithm cannot extract it correctly. In this example, the IBAN was reported instead of the account number, the algorithm tries and fails to match the IBAN to the account number dictionary.
+
+![corrupted_files](../images/corrupted_files.png)
 
 
 ## MT940 Sort Folder App
@@ -105,9 +114,9 @@ The folders created by the MT940 App will look like this:
 MT 940 30 07 2024 (folder)
     - Client A GNF 2907
     - Client A USD 2907
-    - Client B FRANCE EUR 2907
-    - Client B FRANCE GNF 2907 2
-    - Client B FRANCE GNF 2907
+    - Client B EUR 2907
+    - Client B GNF 2907 2
+    - Client B GNF 2907
     - ...
 ```
 
@@ -180,25 +189,25 @@ MT940_2607_2907 (folder)
 
 1. **Launch the MT940 App:**
     - You will be welcomed by a small window:
-    - ![Welcome Window](Functional_exes/images/Window_MT940_App.png)
+    - ![Welcome Window](../images/Window_MT940_App.png)
     - Click on "Open MT940 App" to open a page in the default browser.
 
 2. **Upload the Folder:**
     - The page allows you to select the folder to upload.
     - Once selected, click on "Upload" to upload and process the folder.
     - A zip file with the processed files will be produced and can be downloaded to the user's download folder.
-    - ![Upload Page](Functional_exes/images/Web_MT940_App.png)
+    - ![Upload Page](../images/Web_MT940_App.png)
 
 3. **Launch the Folder Sort:**
     - Unzip the folder downloaded by the MT940 App.
     - Place the unzipped folder in another folder (referred to as Folder A).
     - Folder A will contain folders that have already been processed by the MT940 App.
     - Launch the Folder Sort MT940 App
-    - ![Sort Welcome Window](Functional_exes/images/Window_Folder_Sort_MT940_App.png)
+    - ![Sort Welcome Window](../images/Window_Folder_Sort_MT940_App.png)
 
 4. **Sort the Files**
     - Once "Open Folder Sort MT940" is clicked a page will open on the default browser :
-    - ![Sort Page](Functional_exes/images/Web_Folder_Sort_MT940_App.png)
+    - ![Sort Page](../images/Web_Folder_Sort_MT940_App.png)
     - After selecting the folder to sort the clicking "Sort" a folder can be downloaded by clicking "Download Sorted Folder".
 
 
@@ -228,7 +237,7 @@ MT940_2607_2907 (folder)
 To try and run the `app.py` for each app the user must have `flask` install locally if on mac/linux or use a python environment on windows. To run `app.py` locally run `flask run` in the command line in the `app.py` directory. The command will be executed and will display a link that can be copied and pasted into the browser to visualize the web page. In the screenshot below, the link is "http://127.0.0.1:5000"(which is the localhost of the local machine).
 
 Terminal screenshot :
-![flask_run](Functional_exes/images/sc_flask_run.png)
+![flask_run](../images/sc_flask_run.png)
 
 
 To create the Python executables, I used `pyinstaller`. It is a powerful tool that converts Python scripts into standalone executables, allowing you to run your application without needing to have a Python interpreter installed on the target machine. This simplifies distribution and deployment, especially for users who may not be familiar with setting up Python environments.
