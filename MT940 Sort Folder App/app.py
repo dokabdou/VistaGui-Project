@@ -47,8 +47,7 @@ def date_range(name):
     return None
 
 
-def sort_files_by_prefix(source_folder, destination_folder,
-                         no_currency_folder):
+def sort_files_by_prefix(source_folder, destination_folder, no_currency_folder):
     if not os.path.exists(destination_folder):
         os.makedirs(destination_folder)
     for root, dirs, files in os.walk(source_folder):
@@ -132,8 +131,7 @@ def rename_sorted_folder_by_dates(sorted_folder):
         oldest_date_str = oldest_date.strftime('%d%m')
         most_recent_date_str = most_recent_date.strftime('%d%m')
         new_folder_name = f'MT940_{oldest_date_str}_{most_recent_date_str}'
-        new_sorted_folder = os.path.join(os.path.dirname(sorted_folder),
-                                         new_folder_name)
+        new_sorted_folder = os.path.join(os.path.dirname(sorted_folder), new_folder_name)
         folder_name = new_folder_name
         if not os.path.exists(new_sorted_folder):
             os.rename(sorted_folder, new_sorted_folder)
@@ -172,7 +170,7 @@ def download():
     if not folder_name:
         return jsonify({
             'message':
-            'No folder to download ! Upload a folder to be sorted first. No folder name'
+            'Pas de dossier à télécharger ! Importez le dossier à trier. Pas de nom de dossier'
         })
 
     sorted_folder_path = os.path.join(SORTED_FOLDER)
@@ -181,7 +179,7 @@ def download():
     if not os.path.exists(sorted_folder_path):
         return jsonify({
             'message':
-            'No folder to download ! Upload a folder to be sorted first. No sorted folder'
+            'Pas de dossier à télécharger ! Importez le dossier à trier. Pas de dossier trié'
         })
 
     zip_path = os.path.join(SORTED_FOLDER, f'{folder_name}.zip')
@@ -203,7 +201,7 @@ def download():
 
     # Check if zip file was created successfully
     if not os.path.exists(zip_path):
-        return jsonify({'message': 'Zip file creation failed'}), 500
+        return jsonify({'message': 'La création du zip à échoué'}), 500
 
     return send_file(zip_path, as_attachment=True)
 
@@ -220,7 +218,7 @@ def reload():
         if os.path.exists(NO_CURRENCY):
             shutil.rmtree(NO_CURRENCY)
             os.makedirs(NO_CURRENCY)
-        return jsonify({'message': 'All files successfully deleted from server.'})
+        return jsonify({'message': "Tous les fichiers sont supprimés de l'application!"})
     except Exception as e:
         return jsonify({'message': f'An error occurred: {e}'}), 500
 
@@ -246,7 +244,7 @@ def sort():
 
     return jsonify({
         'message':
-        f'Files sorted and folder renamed to {os.path.basename(sorted_folder_with_dates)}!'
+        f'Les fichiers triés, et ont été déplacés dans le dossier {os.path.basename(sorted_folder_with_dates)}!'
     })
 
 
@@ -261,15 +259,15 @@ class App:
         self.root = root
         root.title("Flask Desktop App")
 
-        self.label = tk.Label(root, text="Welcome to Folder Sort MT940 App!")
+        self.label = tk.Label(root, text="Bienvenue à l'application de tri de dossiers MT940 !")
         self.label.pack(pady=10)
 
         self.button = tk.Button(root,
-                                text="Open Folder Sort MT940",
+                                text="Ouvrir Tri Dossiers MT940",
                                 command=open_browser)
         self.button.pack(pady=10)
 
-        self.quit_button = tk.Button(root, text="Quit", command=root.quit)
+        self.quit_button = tk.Button(root, text="Quitter", command=root.quit)
         self.quit_button.pack(pady=10)
 
 

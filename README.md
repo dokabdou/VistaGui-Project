@@ -273,7 +273,7 @@ Here’s a brief overview of the steps to create executables using `pyinstaller`
 - **Create MT940 App**
 
 ```bash
-pyinstaller --onefile --windowed --add-data "templates;templates" --add-data "static;static" --add-data "Accounts_BIC.csv;." app.py
+pyinstaller --onefile --windowed --add-data "templates;templates" --add-data "static;static" app.py
 ```
 
 This command creates an executable file using the provided HTML/CSS/JS and the necessary CSV to upload the clients and their information. 

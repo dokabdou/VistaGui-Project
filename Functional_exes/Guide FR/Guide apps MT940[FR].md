@@ -4,9 +4,9 @@ Auteur : Abdoulaye DIALLO
 
 ## Introduction
 
-Ce document décrit les étapes et les fonctionnalités nécessaires pour créer deux applications de bureau en utilisant Python et Flask : l'application MT940 et l'application MT940 Sort Folder. Ces applications sont conçues pour faciliter le traitement et le tri des fichiers de transactions financières, simplifiant ainsi la gestion et l'organisation de grands ensembles de données.
+Ce document décrit les étapes et les fonctionnalités nécessaires pour créer deux applications de bureau en utilisant Python et Flask : l'application MT940 et l'application "Tri Dossiers MT940". Ces applications sont conçues pour faciliter le traitement et le tri des fichiers de transactions financières, simplifiant ainsi la gestion et l'organisation de grands ensembles de données.
 
-L'application MT940 traite les fichiers générés par le logiciel bancaire, modifie des détails spécifiques comme les numéros BIC, et produit en sortie un fichier texte. L'application MT940 Sort Folder prend ces fichiers traités et les organise davantage en une structure triée basée sur les clients et les devises.
+L'application MT940 traite les fichiers générés par le logiciel bancaire, modifie des détails spécifiques comme les numéros BIC, et produit en sortie un fichier texte. L'application Tri Dossiers MT940 prend ces fichiers traités et les organise davantage en une structure triée basée sur les clients et les devises.
 
 En suivant ce guide, les utilisateurs pourront créer des fichiers exécutables autonomes pour les deux applications en utilisant `pyinstaller`, garantissant un flux de travail fluide et efficace pour la gestion des fichiers MT940.
 
@@ -70,22 +70,22 @@ L'exécutable :
 5. **Sortie** : Un dossier compressé contenant les fichiers texte produits.
 
 - **Boutons**
-    - Choose CSV File : choisir le fichier CSV contenant les noms de clients, numéro de comptes, et numéro BIC
-    - Choose Folder : choisir le dossier contenant les fichiers MT 940 à traiter
-    - Upload : commence l'importation des fichiers MT 940 du dossier et le traitement des fichiers
-    - Download Processed files : 
+    - Choisir le fichier CSV : choisir le fichier CSV contenant les noms de clients, numéro de comptes, et numéro BIC
+    - Choisir le Dossier : choisir le dossier contenant les fichiers MT 940 à traiter
+    - Importer : commence l'importation des fichiers MT 940 du dossier et le traitement des fichiers
+    - Télécharger fichiers traités : 
       - télécharge le dossier compressé traité
       - une fois le zip téléchargé par l'utilisateur les copies importées sont supprimées    
       - l'utilisateur peut de nouveau importer un dossier dans l'application  
-    - Reload Upload :
+    - Reinitialiser :
         - supprime les fichiers importées dans l'application
 
 
 ### Restriction
-La seule restriction de l'application est que le dossier qui sera  importé par l'utilisateur devra être nommé du "MT 940 dd mm yyyy". Si le dossier n'est pas conforme, un message apparaittra. 
+La seule restriction de l'application est que le dossier qui sera  importé par l'utilisateur devra être nommé du "MT 940 jj mm aaaa". Si le dossier n'est pas conforme, un message apparaittra. 
 
 Capture d'écran de l'application:
-![restriction](../images/restriction.png)
+![restriction](images/restriction.png)
 
 
 ### Fichiers corrompus 
@@ -96,11 +96,11 @@ Dans l'exemple si dessous:
 - no_25 : ne contient pas ":25:" qui est recherché par l'algorithme pour l'extraction du numéro de compte client
 - problem_at_25: ce fichier contient ":25:" mais il n'y a pas de numéro de compte client et donc l'algorithme ne peut pas l'extraire correctement. Dans cet exemple, l'IBAN est renseigné au lieu du numéro de compte, et l'algorithme essai de trouver cet IBAN dans le dictionnaire des numéro de compte et donc échoue.
 
-![corrupted_files](../images/corrupted_files.png)
+![corrupted_files](images/fichiers_corompus.png)
 
 
 
-## Application MT940 Sort Folder
+## Application Tri Dossiers MT940
 
 ### Fonctionnalités
 
@@ -120,9 +120,9 @@ MT 940 30 07 2024 (dossier)
     - ...
 ```
 
-- **Utilisation de l'application MT940 Sort Folder**
+- **Utilisation de l'application Tri Dossiers MT940**
 
-Le dossier créé par l'application MT940 devra d'abord être placé dans un autre dossier avant de pouvoir être trié par l'application MT940 Sort Folder.
+Le dossier créé par l'application MT940 devra d'abord être placé dans un autre dossier avant de pouvoir être trié par l'application Tri Dossiers MT940.
 
 ```
 Dossier A (dossier)
@@ -133,7 +133,7 @@ Dossier A (dossier)
 
 - **Exemple de Sortie**
 
-L'application MT940 Sort Folder prendra un dossier(Dossier A) contenant des dossiers comme l'exemple ci-dessus et renverra un dossier avec les fichiers triés par client. Au sein de chaque dossier client, les fichiers sont ensuite triés par devise. Le dossier de sortie est nommé "MT940" suivi de l'intervalle des dates des fichiers. Par exemple, si les dossiers MT940 vont du 26/07 au 29/07, le dossier sera nommé `MT940_2607_2907`.
+L'application Tri Dossiers MT940 prendra un dossier(Dossier A) contenant des dossiers comme l'exemple ci-dessus et renverra un dossier avec les fichiers triés par client. Au sein de chaque dossier client, les fichiers sont ensuite triés par devise. Le dossier de sortie est nommé "MT940" suivi de l'intervalle des dates des fichiers. Par exemple, si les dossiers MT940 vont du 26/07 au 29/07, le dossier sera nommé `MT940_2607_2907`.
 
 ```
 MT940_2607_2907 (dossier)
@@ -152,12 +152,12 @@ MT940_2607_2907 (dossier)
 ```
 
 - **Boutons**
-    - Sort : commence le tri des fichiers
-    - Download Sorted files : 
+    - Trier : commence le tri des fichiers
+    - Télécharger le dossier trié : 
       - télécharge le dossier compressé trié
       - une fois le zip téléchargé par l'utilisateur les copies importées sont supprimées 
       - l'utilisateur peut de nouveau importer un dossier dans l'application 
-    - Reload Upload :
+    - Reinitialiser :
         - supprime les fichiers importés
 
 
@@ -180,7 +180,7 @@ MT940_2607_2907 (dossier)
 4. **Renommer le dossier trié par dates** :
     - Le programme extrait les dates des noms des dossiers triés.
     - Il identifie les dates les plus anciennes et les plus récentes pour renommer le dossier trié Client An de refléter la plage de dates des fichiers contenus.
-    - Le nouveau format du nom de dossier est `MT940_ddmm_ddmm`.
+    - Le nouveau format du nom de dossier est `MT940_jjmm_jjmm`.
 
 5. **Sortie** :
     - La sortie finale est un dossier compressé contenant des dossiers spécifiques aux clients, chacun étant ensuite organisé par devise.
@@ -190,29 +190,29 @@ MT940_2607_2907 (dossier)
 
 1. **Lancez l'application MT940 :**
     - Vous serez accueilli par une petite fenêtre :
-    - ![Fenêtre de bienvenue](../images/Window_MT940_App.png)
-    - Cliquez sur "Open MT940 App" pour ouvrir une page dans le navigateur par défaut.
-    - Cliquez sur "Choose CSV File" pour importer le csv clients
-    - Cliquez sur "Choose Folder" pour importer le dossier des fichiers MT 940 à traiter
+    - ![Fenêtre de bienvenue](images/Acceuille_MT940.png)
+    - Cliquez sur "Ouvrir MT940" pour ouvrir une page dans le navigateur par défaut.
+    - Cliquez sur "Choisir le fichier CSV" pour importer le csv clients
+    - Cliquez sur "Choisir le Dossier" pour importer le dossier des fichiers MT 940 à traiter
  
 2. **Téléchargez le Dossier :**
-    - La page permet de sélectionner le dossier à télécharger dans l'application.
-    - Une fois sélectionné, cliquez sur "Upload" pour télécharger et traiter le dossier.
+    - La page permet de sélectionner le dossier à importer dans l'application.
+    - Une fois sélectionné, cliquez sur "Importer" pour importer et traiter le dossier.
     - Un fichier zip avec les fichiers traités sera produit et pourra être téléchargé dans le dossier de téléchargement de l'utilisateur.
-    - ![Page de téléchargement](../images/Web_MT940_App.png)
+    - ![Page de téléchargement](images/MT940_.png)
 
 3. **Lancez le Tri de Dossier :**
     - Décompressez le dossier téléchargé par l'application MT940
     - Placez le dossier décompressé dans un autre dossier (appelé Dossier A).
     - Le Dossier A contiendra les dossiers déjà traités par l'application MT940.
-    - Avant de lancer "Folder Sort MT940", fermé "MT940 App"(et la petite fenêtre).
-    - Lancez l'application Folder Sort MT940
-    - ![Fenêtre de bienvenue du tri](../images/Window_Folder_Sort_MT940_App.png)
+    - Avant de lancer "Tri Dossiers", fermé l'application "MT940"(et la petite fenêtre).
+    - Lancez l'application Tri Dossiers
+    - ![Fenêtre de bienvenue du tri](images/Acceuille_Tri_Dossiers.png)
 
 4. **Trier les Fichiers**
-    - Une fois "Open Folder Sort MT940" cliqué, une page s'ouvrira dans le navigateur par défaut :
-    - ![Page de tri](../images/Web_Folder_Sort_MT940_App.png)
-    - Après avoir sélectionné le dossier à trier, cliquez sur "Sort" puis téléchargez le dossier trié en cliquant sur "Download Sorted Folder".
+    - Une fois "Ouvrir Tri Dossiers MT940" cliqué, une page s'ouvrira dans le navigateur par défaut :
+    - ![Page de tri](images/Tri_Dossiers.png)
+    - Après avoir sélectionné le dossier à trier, cliquez sur "Trier" puis téléchargez le dossier trié en cliquant sur "Télécharger le dossier trié".
 
 #### Création d'Exécutables Python
 
@@ -239,7 +239,7 @@ MT940_2607_2907 (dossier)
 Pour essayer et exécuter `app.py` pour chaque application, l'utilisateur doit avoir `flask` installé localement s'il est sur Mac/Linux ou utiliser un environnement Python sous Windows. Pour exécuter `app.py` localement, exécutez `flask run` dans la ligne de commande dans le répertoire de `app.py`. La commande sera exécutée et affichera un lien qui peut être copié et collé dans le navigateur pour visualiser la page web. Dans la capture d'écran ci-dessous, le lien est "http://127.0.0.1:5000" (qui est le localhost de la machine locale).
 
 Capture d'écran du terminal :
-![flask_run](../images/sc_flask_run.png)
+![flask_run](images/sc_flask_run.png)
 
 Pour créer les exécutables Python, j'ai utilisé `pyinstaller`. C'est un outil puissant qui convertit les scripts Python en exécutables autonomes, permettant d'exécuter votre application sans avoir besoin d'un interpréteur Python installé sur la machine cible. Cela simplifie la distribution et le déploiement, surtout pour les utilisateurs qui ne sont pas familiarisés avec la configuration des environnements Python.
 
@@ -252,14 +252,14 @@ Voici un aperçu des étapes pour créer des exécutables avec `pyinstaller` :
    ```
 
 2. **Créer les Exécutables** :
-   Utilisez les commandes suivantes pour générer les fichiers exécutables pour l'application MT940 et l'application MT940 Sort Folder. Ces commandes regroupent les fichiers HTML/CSS/JS nécessaires et toutes les autres données requises.
+   Utilisez les commandes suivantes pour générer les fichiers exécutables pour l'application MT940 et l'application Tri Dossiers MT940. Ces commandes regroupent les fichiers HTML/CSS/JS nécessaires et toutes les autres données requises.
 
    - **Application MT940** :
      ```bash
      pyinstaller --onefile --windowed --add-data "templates;templates" --add-data "static;static" --add-data "Accounts_BIC.csv;." app.py
      ```
 
-   - **Application MT940 Sort Folder** :
+   - **Application Tri Dossiers MT940** :
      ```bash
      pyinstaller --onefile --windowed --add-data "templates;templates" --add-data "static;static" app.py
      ```
@@ -272,12 +272,12 @@ Voici un aperçu des étapes pour créer des exécutables avec `pyinstaller` :
 - **Créer l'Application MT940**
 
 ```bash
-pyinstaller --onefile --windowed --add-data "templates;templates" --add-data "static;static" --add-data "Accounts_BIC.csv;." app.py
+pyinstaller --onefile --windowed --add-data "templates;templates" --add-data "static;static" app.py
 ```
 
 Cette commande crée un fichier exécutable en utilisant les fichiers HTML/CSS/JS fournis et le fichier CSV nécessaire pour télécharger les clients et leurs informations.
 
-- **Créer l'Application MT940 Sort Folder**
+- **Créer l'Application Tri Dossiers MT940**
 
 ```bash
 pyinstaller --onefile --windowed --add-data "templates;templates" --add-data "static;static" app.py

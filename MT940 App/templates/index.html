@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MT 940 Processing </title>
+    <title> Traitement MT 940 </title>
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Upload MT 940 folder to be Processed</h1>
+        <h1>Importer dossier MT 940 à traiter</h1>
         <form id="uploadForm">
             <div class="file-input-container">
                 <input type="file" id="importCsv" name="importCsv" style="display: none;">
-                <label for="importCsv" class="custom-file-label">Choose CSV File</label>
+                <label for="importCsv" class="custom-file-label">Choisir le fichier CSV</label>
                 <input type="file" id="fileInput" name="files[]" webkitdirectory multiple style="display: none;">
-                <label for="fileInput" class="custom-file-label">Choose Folder</label>
+                <label for="fileInput" class="custom-file-label">Choisir le Dossier</label>
             </div>
-            <button type="submit">Upload</button>
+            <button type="submit">Importer</button>
         </form>
-        <button id="downloadButton" class="full-width complementary">Download Processed Files</button>
-        <button id="reloadButton" class="full-width">Reload Upload</button>
+        <button id="downloadButton" class="full-width complementary">Télécharger fichiers traités</button>
+        <button id="reloadButton" class="full-width">Reinitialiser</button>
         <p id="message"></p>
         <div id="fileDisplay"></div>
     </div>
