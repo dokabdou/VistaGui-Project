@@ -48,16 +48,16 @@ def upload():
     print("Uploading")
 
     if 'files[]' not in request.files or 'importCsv' not in request.files:
-        return jsonify({'message': "S'il vous plait importez un dossier à traiter."}), 400
+        return jsonify({'message': 'Please upload a folder to process'}), 400
 
     folder_name = request.form.get('folderName')
     import_csv = request.files.get('importCsv')
 
     if not folder_name:
-        return jsonify({'message': 'Pas de nom de dossier donné.'}), 400
+        return jsonify({'message': 'No folder name provided'}), 400
     
     if not re.match(r'^MT 940 \d{2} \d{2} \d{4}$', folder_name):
-        return jsonify({'message': f"Nom du dossier doit être du style 'MT 940 jj mm aaaa'. {folder_name} n'est pas conforme"})
+        return jsonify({'message': f'Folder name must be "MT 940 dd mm yyyy". {folder_name} is not valid'})
 
     files = request.files.getlist('files[]')
     for file in files:
@@ -84,23 +84,23 @@ def upload():
     print("file_counter: " , file_counter)
 
     if imported_files != file_counter:
-        message = "Certains fichiers n'ont pas pu être traités. | Nombre de fichiers non traités: " 
+        message = "Some files were not processed correctly. | Number of files not processed: " 
         message += str(imported_files-file_counter)
         message += " | \n"
         return jsonify({'message': message, 'result': bad_files})
 
-    return jsonify({'message': 'Fichier traités avec succès.'})
+    return jsonify({'message': 'Files successfully uploaded and processed.'})
 
 
 @flask_app.route('/download', methods=['GET'])
 def download():
     global folder_name
     if not folder_name:
-        return jsonify({'message': "Pas de dossier à télécharger ! Importez un dossier à traiter d'abord."})
+        return jsonify({'message': 'No folder to download ! Upload a folder to be processed first.'})
 
     processed_folder = os.path.join(PROCESSED_FOLDER, folder_name)
     if not os.path.exists(processed_folder):
-        return jsonify({"message': 'Pas de dossier à télécharger ! Importez un dossier à traiter d'abord."})
+        return jsonify({'message': 'No folder to download ! Upload a folder to be processed first.'})
 
     zip_path = os.path.join(UPLOAD_FOLDER, f'{folder_name}.zip')
     with zipfile.ZipFile(zip_path, 'w') as zipf:
@@ -128,7 +128,7 @@ def reload():
         file_counter = 0
         bad_files = []
         folder_name = None
-        return jsonify({'message': "Tous les fichiers sont supprimés de l'application!"})
+        return jsonify({'message': 'All files successfully deleted from server.'})
     except Exception as e:
         return jsonify({'message': f'An error occurred: {e}'}), 500
 
@@ -169,10 +169,6 @@ def create_account_bic_mapping(filename):
 
                 if account_number and bic_number:  # Ensure neither is empty
                     account_bic_dict[account_number] = [client_name, bic_number, currency]
-                    account_number = None
-                    bic_number = None
-                    client_name = None
-                    currency = None
     print("BIC Mapping -- DONE ---")
     return account_bic_dict
 
@@ -258,13 +254,13 @@ class TkApp:
         self.root = root
         root.title("Flask Desktop App")
 
-        self.label = tk.Label(root, text="Bienvenue à l'application MT940 !")
+        self.label = tk.Label(root, text="Welcome to MT940 App!")
         self.label.pack(pady=10)
 
-        self.button = tk.Button(root, text="Ouvrir MT940", command=open_browser)
+        self.button = tk.Button(root, text="Open MT940 App", command=open_browser)
         self.button.pack(pady=10)
 
-        self.quit_button = tk.Button(root, text="Quitter", command=root.quit)
+        self.quit_button = tk.Button(root, text="Quit", command=root.quit)
         self.quit_button.pack(pady=10)
 
 def run_flask():

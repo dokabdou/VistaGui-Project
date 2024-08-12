@@ -1,12 +1,12 @@
 document.getElementById('importCsv').addEventListener('change', function() {
     const label = document.querySelector('label[for="importCsv"]');
-    const fileName = this.files[0] ? this.files[0].name : 'Choisir le fichier CSV';
+    const fileName = this.files[0] ? this.files[0].name : 'Choose CSV File';
     label.textContent = fileName;
 });
 
 document.getElementById('fileInput').addEventListener('change', function() {
     const label = document.querySelector('label[for="fileInput"]');
-    const folderName = this.files[0] ? this.files[0].webkitRelativePath.split('/')[0] : 'Choisir le Dossier';
+    const folderName = this.files[0] ? this.files[0].webkitRelativePath.split('/')[0] : 'Choose Folder';
     label.textContent = folderName;
 });
 
@@ -36,7 +36,7 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
     .then(data => {
         let message = data.message;
         if (data.result !== undefined) {
-            message += ' | Ces fichiers sont : ' + data.result;
+            message += ' | These are the files : ' + data.result;
         }
         document.getElementById('message').textContent = message;
     }).catch(error => console.error('Error:', error));
