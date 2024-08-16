@@ -142,16 +142,6 @@ def run_python_script(folder_name, csv_path):
     accs = process_files_in_folder(folder_path, dict_account_bic, processed_folder)
     return accs
 
-def read_second_row(filename):
-    second_row = []
-    with open(filename, newline='', encoding='ISO-8859-1') as csvfile:
-        reader = csv.reader(csvfile, delimiter=';')
-        next(reader)  # Skips "MT900 FICSW940.recRCU_01122022_0010.zip;;;;;;;;;;;;;;"
-        second_line = next(reader)  # Read the second row
-        for column in second_line:
-            second_row.append(column)
-    return second_row
-
 def create_account_bic_mapping(filename):
     print("-----BIC mapping started----")
     global file_counter
